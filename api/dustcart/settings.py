@@ -11,16 +11,24 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import os
+import environ
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+env = environ.Env()
+
+# 環境変数でDJANGO_READ_ENV_FILEをTrueにしておくと.envを読んでくれる。
+READ_ENV_FILE = env.bool('DJANGO_READ_ENV_FILE', default=True)
+if READ_ENV_FILE:
+    env_file = str(os.path.join(BASE_DIR, '.env'))
+    env.read_env(env_file)
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'leewpt)7j)vx5r_w6qz=(wbyqf!t6p-2%oy*^th=nxll5^#xp9'
+SECRET_KEY = 'tzc+3)76$#6ma6p3c_&mj4k-hc(l6)_%q1$wtbl-at8*w++&f-'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -37,6 +45,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'cockpit',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -75,8 +85,12 @@ WSGI_APPLICATION = 'dustcart.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': os.environ["MYSQL_DATABASE"],
+        'USER': os.environ["MYSQL_USER"],
+        'PASSWORD': os.environ["MYSQL_PASSWORD"],
+        'HOST': os.environ["MYSQL_HOST"],
+        'PORT': os.environ["MYSQL_PORT"],
     }
 }
 
@@ -105,7 +119,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = os.environ["TZ"]
 
 USE_I18N = True
 
