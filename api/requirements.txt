@@ -3,3 +3,4 @@ PyMySQL==0.9.3
 django-environ==0.4.5
 djangorestframework==3.11.0
 cryptography==2.8
+django-cors-headers==3.2.1
