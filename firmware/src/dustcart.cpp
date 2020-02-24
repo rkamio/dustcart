@@ -44,7 +44,7 @@ void Dustcart::turnLeft(int speed) {
 }
 
 void Dustcart::stop() {
-    std::cout << "stop!" << std::endl;
+    // std::cout << "stop!" << std::endl;
     left_caterpillar->stop();
     right_caterpillar->stop();
 }
