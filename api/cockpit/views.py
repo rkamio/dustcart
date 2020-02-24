@@ -45,3 +45,4 @@ class CockpitAPI(APIView):
             )
         dustcart_socket.close()
         print("send_command done.")
+
